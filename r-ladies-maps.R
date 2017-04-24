@@ -15,21 +15,26 @@ library(ggmap)
 library(purrr)
 library(tidyr)
 
-rladies <- unique(users) %>%
-  filter(str_detect(screen_name, '^(RLadies).*') &
-           !screen_name %in% c('RLadies', 'RLadies_LF', 'RLadiesGlobal')) %>%
-  add_row(                              # add Taipei chapter (info from Meetup)
-    screen_name = 'RLadiesTaipei',
-    location = 'Taipei',
-    created_at = as.Date('2014-11-15'),
-    followers_count = 347) %>%
-  mutate(created_at = format(as.Date(created_at), format = '%Y-%m-%d'),
-         age_days = difftime(as.Date('2017-4-25'), created_at, unit = 'days'),
-         location = ifelse(screen_name == 'RLadiesLx', 'Lisbon', 
-                           ifelse(screen_name == 'RLadiesMTL', 'Montreal', location))) %>%
-  select(screen_name, location, created_at, followers = followers_count, age_days) %>%
-  mutate(longlat = purrr::map(.$location, geocode)) %>%
-  unnest()
+# rladies <- unique(users) %>%
+#   filter(str_detect(screen_name, '^(RLadies).*') &
+#            !screen_name %in% c('RLadies', 'RLadies_LF', 'RLadiesGlobal')) %>%
+#   add_row(                              # add Taipei chapter (info from Meetup)
+#     screen_name = 'RLadiesTaipei',
+#     location = 'Taipei',
+#     created_at = as.Date('2014-11-15'),
+#     followers_count = 347) %>%
+#   add_row(
+#     screen_name = 'RLadiesWarsaw',
+#     location = 'Warsaw',
+#     created_at = as.Date('2016-11-15'),
+#     followers_count = 80) %>%
+#   mutate(created_at = format(as.Date(created_at), format = '%Y-%m-%d'),
+#          age_days = difftime(as.Date('2017-4-25'), created_at, unit = 'days'),
+#          location = ifelse(screen_name == 'RLadiesLx', 'Lisbon',
+#                            ifelse(screen_name == 'RLadiesMTL', 'Montreal', location))) %>%
+#   select(screen_name, location, created_at, followers = followers_count, age_days) %>%
+#   mutate(longlat = purrr::map(.$location, geocode)) %>%
+#   unnest()
 
 # saveRDS(rladies, 'rladies.rds')
 rladies <- readRDS('rladies.rds')
@@ -40,7 +45,7 @@ rladies <- readRDS('rladies.rds')
 library('maps')
 library('ggthemes')
 
-# load('RLadies_growing.Rdata')
+# load('RLadies_twitter_growth.Rdata')
 
 #··················
 # plotly
@@ -54,7 +59,7 @@ map <- ggplot(world.cities, package = 'maps') +
                  size = followers,
                  frame = created_at),
              data = rladies, colour = 'purple', alpha = .5) +
-  scale_size_continuous(range = c(1, 12), breaks = c(250, 500, 750, 1000)) + 
+  scale_size_continuous(range = c(1, 10), breaks = c(250, 500, 750, 1000)) + 
   labs(size = 'Followers')
 
 ggplotly(map, tooltip = c('text', 'size', 'frame'))
