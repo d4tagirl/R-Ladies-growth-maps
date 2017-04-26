@@ -5,6 +5,7 @@ library(rtweet)
 #                      parse = TRUE)
 
 # saveRDS(users, 'users.rds')
+# write.csv(users, 'users.csv')
 
 users <- readRDS('users.rds')
 
@@ -37,6 +38,7 @@ library(tidyr)
 #   unnest()
 
 # saveRDS(rladies, 'rladies.rds')
+# # write.csv(rladies, 'rladies.csv')
 rladies <- readRDS('rladies.rds')
  
 # # #Google Maps API Terms of Service: http://developers.google.com/maps/terms.
