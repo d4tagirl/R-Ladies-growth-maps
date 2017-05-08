@@ -2,7 +2,7 @@
 
 Here is the code to make this map:
 
-![alt tag](https://github.com/d4tagirl/R-Ladies-growth-maps/blob/master/rladies_less_frames.gif)
+![alt tag](https://github.com/d4tagirl/R-Ladies-growth-maps/blob/master/rladies_growth.gif)
 
 I used ggmap package to access maps from the Google Maps API, and the package gganimate to make the animation.
 
