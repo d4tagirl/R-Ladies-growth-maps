@@ -3,11 +3,13 @@ library(rtweet)
 # users <- search_users(q = 'RLadies',
 #                      n = 1000,
 #                      parse = TRUE)
-
-# saveRDS(users, 'users.rds')
+# 
 # write.csv(users, 'users.csv')
 
-users <- readRDS('users.rds')
+library(readr)
+library(dplyr)
+users <- read_csv('users.csv') %>% 
+  select(-1)
 
 library(dplyr)
 library(lubridate)
@@ -15,6 +17,10 @@ library(stringr)
 library(ggmap)
 library(purrr)
 library(tidyr)
+library(tibble)
+
+lookup <- tibble(screen_name = c('RLadiesLx','RLadiesMTL' ,'RLadiesSeattle'), 
+                     location = c('Lisbon', 'Montreal', 'Seattle'))
 
 # rladies <- unique(users) %>%
 #   filter(str_detect(screen_name, '^(RLadies).*') &
@@ -30,16 +36,15 @@ library(tidyr)
 #     created_at = as.Date('2016-11-15'),
 #     followers_count = 80) %>%
 #   mutate(created_at = format(as.Date(created_at), format = '%Y-%m-%d'),
-#          age_days = difftime(as.Date('2017-4-25'), created_at, unit = 'days'),
-#          location = ifelse(screen_name == 'RLadiesLx', 'Lisbon',
-#                            ifelse(screen_name == 'RLadiesMTL', 'Montreal', location))) %>%
+#          age_days = difftime(as.Date('2017-5-15'), created_at, unit = 'days')) %>%
+#   left_join(lookup, by = 'screen_name', copy = TRUE) %>%
+#   mutate(location = ifelse(is.na(location.y), location.x, location.y)) %>%
 #   select(screen_name, location, created_at, followers = followers_count, age_days) %>%
 #   mutate(longlat = purrr::map(.$location, geocode)) %>%
 #   unnest()
 
-# saveRDS(rladies, 'rladies.rds')
 # # write.csv(rladies, 'rladies.csv')
-rladies <- readRDS('rladies.rds')
+rladies <- read_csv('rladies.csv')
  
 # # #Google Maps API Terms of Service: http://developers.google.com/maps/terms.
 # # #Please cite ggmap if you use it: see citation('ggmap') for details.

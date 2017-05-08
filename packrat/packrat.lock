@@ -120,6 +120,11 @@ Source: CRAN
 Version: 1.27.1
 Hash: 9f94c576cc4b9e83fd714ae8387272e6
 
+Package: hms
+Source: CRAN
+Version: 0.3
+Hash: 3fca8a1c97e6cfb297fe3f4690f82c58
+
 Package: htmltools
 Source: CRAN
 Version: 0.3.5
@@ -236,6 +241,12 @@ Source: CRAN
 Version: 0.2.2
 Hash: 9f218b40dee7fe7f942039f974bd98b8
 Requires: BH, Rcpp, dplyr, lazyeval, magrittr
+
+Package: readr
+Source: CRAN
+Version: 1.1.0
+Hash: 3506086f41d307f5a78ee64e010536fa
+Requires: BH, R6, Rcpp, hms, tibble
 
 Package: reshape2
 Source: CRAN
